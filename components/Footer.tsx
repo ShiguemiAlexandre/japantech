@@ -1,7 +1,10 @@
 
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import TranslatedText from './TranslatedText';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   const whatsappUrl = "https://api.whatsapp.com/send?phone=5516996398116&text=Olá%20Japantech!%20Gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.";
   const instagramUrl = "https://www.instagram.com/japantech_solutions/";
@@ -27,33 +30,36 @@ const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-gray-500 max-w-md leading-relaxed text-sm">
-              Transformamos empresas através de sistemas personalizados, automação inteligente e análise de dados estratégica. Tecnologia aplicada ao resultado.
+              <TranslatedText text={t.footer.description} duration={1000} />
             </p>
           </div>
 
           <div>
-            <h4 className="text-white font-bold uppercase mb-4 text-xs tracking-widest">Navegação</h4>
+            <h4 className="text-white font-bold uppercase mb-4 text-xs tracking-widest">
+              <TranslatedText text={t.footer.nav_title} duration={800} />
+            </h4>
             <ul className="space-y-2 text-gray-500 text-xs">
-              <li><a href="#about" className="hover:text-red-500 transition-colors">Sobre Nós</a></li>
-              <li><a href="#services" className="hover:text-red-500 transition-colors">Nossos Serviços</a></li>
-              <li><a href="#projetos" className="hover:text-red-500 transition-colors">Projetos</a></li>
-              <li><a href="#diferenciais" className="hover:text-red-500 transition-colors">Diferenciais</a></li>
+              <li><a href="#about" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.about} duration={800} delay={100} /></a></li>
+              <li><a href="#services" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.services} duration={800} delay={200} /></a></li>
+              <li><a href="#projetos" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.projects} duration={800} delay={300} /></a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-bold uppercase mb-4 text-xs tracking-widest">Contato</h4>
+            <h4 className="text-white font-bold uppercase mb-4 text-xs tracking-widest">
+              <TranslatedText text={t.footer.contact_title} duration={800} delay={200} />
+            </h4>
             <ul className="space-y-2 text-gray-500 text-xs">
               <li><a href={`mailto:${email}`} className="hover:text-white transition-colors">{email}</a></li>
               <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">+55 (16) 99639-8116</a></li>
-              <li>Araraquara, SP - Brasil</li>
+              <li><TranslatedText text={t.header.location} duration={800} delay={400} /></li>
             </ul>
           </div>
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-600 text-[10px] uppercase tracking-widest">
-            © {currentYear} Japantech Soluções Inteligentes. Todos os direitos reservados.
+            © {currentYear} <TranslatedText text={t.footer.rights} duration={1000} delay={500} />
           </p>
           <div className="flex items-center space-x-6 text-gray-600">
             <div className="flex flex-col items-center justify-center w-5 h-5 bg-red-600/20 p-0.5 rounded-xs mr-2 opacity-50 grayscale hover:grayscale-0 transition-all group">

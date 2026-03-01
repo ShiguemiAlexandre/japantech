@@ -1,7 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import TranslatedText from './TranslatedText';
 
 const Hero: React.FC = () => {
+  const { t } = useLanguage();
   const [uptime, setUptime] = useState('00:00:00');
   const whatsappUrl = "https://api.whatsapp.com/send?phone=5516996398116&text=Olá%20Japantech!%20Gostaria%20de%20falar%20com%20um%20especialista%20sobre%20soluções%20para%20minha%20empresa.";
   const instagramUrl = "https://www.instagram.com/japantech_solutions/";
@@ -53,13 +56,13 @@ const Hero: React.FC = () => {
           </div>
           
           <h1 className="text-5xl md:text-[6.5rem] font-black mb-8 leading-[0.9] tracking-tighter uppercase">
-            TECNOLOGIA QUE <span className="text-white">SIMPLIFICA.</span> <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-white">RESULTADOS</span> <br />
-            QUE IMPRESSIONAM.
+            <TranslatedText text={t.hero.title_part1} duration={1000} delay={0} /> <span className="text-white"><TranslatedText text={t.hero.title_part2} duration={1000} delay={500} /></span> <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-white"><TranslatedText text={t.hero.title_part3} duration={1000} delay={1000} /></span> <br />
+            <TranslatedText text={t.hero.title_part4} duration={1000} delay={1500} />
           </h1>
           
           <p className="text-gray-400 max-w-xl text-lg mb-10 font-light border-l border-white/10 pl-6">
-            Sistemas personalizados e análises de dados estratégicas para transformar decisões em crescimento real para sua empresa.
+            {t.hero.subtitle}
           </p>
 
           <div className="flex flex-wrap gap-6">
@@ -69,7 +72,7 @@ const Hero: React.FC = () => {
               rel="noopener noreferrer"
               className="group relative bg-red-600 text-white px-10 py-5 font-black text-sm uppercase tracking-tighter transition-all hover:pr-14 flex items-center justify-center"
             >
-              <span className="relative z-10">Falar com Especialista</span>
+              <span className="relative z-10">{t.header.contact}</span>
               <div className="absolute inset-0 bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left opacity-10"></div>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 opacity-0 group-hover:opacity-100 transition-all">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -82,8 +85,8 @@ const Hero: React.FC = () => {
               className="flex items-center gap-6 px-6 border border-white/10 group cursor-none hover:border-red-600/50 transition-colors"
             >
               <div className="text-[10px] font-mono leading-none">
-                <div className="text-gray-500 uppercase mb-1">Ver Projetos</div>
-                <div className="text-white font-bold">PORTFÓLIO ATIVO</div>
+                <div className="text-gray-500 uppercase mb-1">{t.hero.scroll}</div>
+                <div className="text-white font-bold">{t.projects.title_highlight}</div>
               </div>
               <div className="w-10 h-10 flex items-center justify-center border border-white/10 group-hover:bg-white/5 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -126,7 +129,7 @@ const Hero: React.FC = () => {
 
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
         <div className="w-[1px] h-12 bg-gradient-to-b from-red-600 to-transparent"></div>
-        <span className="text-[9px] font-mono uppercase tracking-[0.4em] vertical-text">Descobrir Soluções</span>
+        <span className="text-[9px] font-mono uppercase tracking-[0.4em] vertical-text">{t.hero.scroll}</span>
       </div>
     </section>
   );

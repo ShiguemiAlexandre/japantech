@@ -13,6 +13,7 @@ export interface Project {
   description: string;
   imageUrl: string;
   url?: string;
+  previewUrl?: string;
 }
 
 export interface Differentiator {
