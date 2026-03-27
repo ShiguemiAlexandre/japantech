@@ -15,7 +15,15 @@ export const translations = {
       title_part4: "QUE IMPRESSIONAM.",
       subtitle: "Transformamos complexidade em resultado. Desenvolvimento de software de alta performance para empresas que não podem parar.",
       cta: "INICIAR PROJETO",
-      scroll: "SCROLL PARA EXPLORAR"
+      scroll: "SCROLL PARA EXPLORAR",
+      protocol: "Protocolo: Inteligência & Escala",
+      system_online: "Sistema Online",
+      social: "Social",
+      uptime: "Uptime",
+      business_intel: "Inteligência de Negócios",
+      active: "Ativo",
+      data_flow: "Fluxo de Dados",
+      streaming: "Transmitindo"
     },
     services: {
       label: "O QUE FAZEMOS",
@@ -49,8 +57,8 @@ export const translations = {
       items: {
         pmc: {
           title: "PMC Cartomancia",
-          category: "Gestão & Escala (Beta)",
-          description: "Plataforma estratégica para centralização de atendimentos. Atualmente em fase de expansão, com módulos de agendamento automatizado e integração de pagamentos em desenvolvimento para transformar a operação em um fluxo 100% autônomo."
+          category: "Gestão & Escala",
+          description: "Plataforma estratégica para centralização de atendimentos. Módulos de agendamento automatizado e integração de pagamentos que transformam a operação em um fluxo 100% autônomo e escalável."
         },
         tanganika: {
           title: "Tanganika",
@@ -120,7 +128,15 @@ export const translations = {
       title_part4: "THAT IMPRESS.",
       subtitle: "We transform complexity into results. High-performance software development for companies that cannot stop.",
       cta: "START PROJECT",
-      scroll: "SCROLL TO EXPLORE"
+      scroll: "SCROLL TO EXPLORE",
+      protocol: "Protocol: Intelligence & Scale",
+      system_online: "System Online",
+      social: "Social",
+      uptime: "Uptime",
+      business_intel: "Business Intel",
+      active: "Active",
+      data_flow: "Data Flow",
+      streaming: "Streaming"
     },
     services: {
       label: "WHAT WE DO",
@@ -154,8 +170,8 @@ export const translations = {
       items: {
         pmc: {
           title: "PMC Cartomancia",
-          category: "Management & Scale (Beta)",
-          description: "Strategic platform for centralizing customer service. Currently in expansion phase, with automated scheduling modules and payment integration under development to transform the operation into a 100% autonomous flow."
+          category: "Management & Scale",
+          description: "Strategic platform for centralizing customer service. Automated scheduling modules and payment integration that transform the operation into a 100% autonomous and scalable flow."
         },
         tanganika: {
           title: "Tanganika",

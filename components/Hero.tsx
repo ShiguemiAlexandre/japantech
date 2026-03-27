@@ -34,15 +34,17 @@ const Hero: React.FC = () => {
       {/* Side Status Indicators - Left */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-12 text-[10px] font-mono text-red-600/40 uppercase tracking-[0.3em] vertical-text">
         <div className="flex items-center gap-4">
-          <span className="animate-pulse">System Online</span>
+          <span className="animate-pulse"><TranslatedText text={t.hero.system_online} duration={1000} /></span>
           <div className="w-[1px] h-20 bg-red-600/20"></div>
         </div>
         <div className="flex items-center gap-4">
-          <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors">Social: @japantech_solutions</a>
+          <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors">
+            <TranslatedText text={`${t.hero.social}: @japantech_solutions`} duration={1200} />
+          </a>
           <div className="w-[1px] h-20 bg-red-600/20"></div>
         </div>
         <div className="flex items-center gap-4">
-          <span>Uptime: {uptime}</span>
+          <span><TranslatedText text={`${t.hero.uptime}: ${uptime}`} duration={1000} /></span>
           <div className="w-[1px] h-20 bg-red-600/20"></div>
         </div>
       </div>
@@ -52,7 +54,9 @@ const Hero: React.FC = () => {
         <div className="lg:col-span-8 text-left">
           <div className="inline-flex items-center gap-3 px-3 py-1 mb-6 border-l-2 border-red-600 bg-red-600/5 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 bg-red-600 animate-pulse"></span>
-            <span className="text-red-500 text-[10px] font-mono font-bold tracking-widest uppercase">Protocolo: Inteligência & Escala</span>
+            <span className="text-red-500 text-[10px] font-mono font-bold tracking-widest uppercase">
+              <TranslatedText text={t.hero.protocol} duration={800} />
+            </span>
           </div>
           
           <h1 className="text-5xl md:text-[6.5rem] font-black mb-8 leading-[0.9] tracking-tighter uppercase">
@@ -62,7 +66,7 @@ const Hero: React.FC = () => {
           </h1>
           
           <p className="text-gray-400 max-w-xl text-lg mb-10 font-light border-l border-white/10 pl-6">
-            {t.hero.subtitle}
+            <TranslatedText text={t.hero.subtitle} duration={1500} delay={2000} />
           </p>
 
           <div className="flex flex-wrap gap-6">
@@ -82,11 +86,15 @@ const Hero: React.FC = () => {
             <a 
               href="#projetos"
               onClick={handleScrollToProjects}
-              className="flex items-center gap-6 px-6 border border-white/10 group cursor-none hover:border-red-600/50 transition-colors"
+              className="flex items-center gap-6 px-6 border border-white/10 group hover:border-red-600/50 transition-colors"
             >
               <div className="text-[10px] font-mono leading-none">
-                <div className="text-gray-500 uppercase mb-1">{t.hero.scroll}</div>
-                <div className="text-white font-bold">{t.projects.title_highlight}</div>
+                <div className="text-gray-500 uppercase mb-1">
+                  <TranslatedText text={t.hero.scroll} duration={800} />
+                </div>
+                <div className="text-white font-bold">
+                  <TranslatedText text={t.projects.title_highlight} duration={800} delay={200} />
+                </div>
               </div>
               <div className="w-10 h-10 flex items-center justify-center border border-white/10 group-hover:bg-white/5 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -106,15 +114,15 @@ const Hero: React.FC = () => {
             </div>
             <div className="space-y-4 font-mono text-[10px]">
               <div className="flex justify-between text-gray-500">
-                <span>Business Intel</span>
-                <span className="text-white">Active</span>
+                <span><TranslatedText text={t.hero.business_intel} duration={1000} /></span>
+                <span className="text-white"><TranslatedText text={t.hero.active} duration={800} /></span>
               </div>
               <div className="h-1 bg-white/5 overflow-hidden">
                 <div className="h-full bg-red-600 w-full animate-pulse"></div>
               </div>
               <div className="flex justify-between text-gray-500">
-                <span>Data Flow</span>
-                <span className="text-white">Streaming</span>
+                <span><TranslatedText text={t.hero.data_flow} duration={1000} /></span>
+                <span className="text-white"><TranslatedText text={t.hero.streaming} duration={800} /></span>
               </div>
               <div className="h-1 bg-white/5 overflow-hidden">
                 <div className="h-full bg-red-600 w-4/5"></div>

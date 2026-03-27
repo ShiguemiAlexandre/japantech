@@ -144,7 +144,7 @@ const DiagnosticChat: React.FC<DiagnosticChatProps> = ({ onClose }) => {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[10px] text-red-500 font-bold uppercase hover:text-red-400 transition-colors cursor-none"
+              className="text-[10px] text-red-500 font-bold uppercase hover:text-red-400 transition-colors"
             >
               Falar com humano agora
             </a>

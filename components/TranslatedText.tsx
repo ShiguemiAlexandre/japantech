@@ -19,32 +19,58 @@ const TranslatedText: React.FC<TranslatedTextProps> = ({
   as: Component = 'span',
   triggerOnScroll = true
 }) => {
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState(() => {
+    let initialScramble = '';
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] === ' ' || text[i] === '\n') {
+            initialScramble += text[i];
+        } else {
+            initialScramble += JAPANESE_CHARS[Math.floor(Math.random() * JAPANESE_CHARS.length)];
+        }
+    }
+    return initialScramble;
+  });
   const [isVisible, setIsVisible] = useState(!triggerOnScroll);
   const elementRef = useRef<HTMLElement>(null);
-  const requestRef = useRef<number>();
-  const startTimeRef = useRef<number>();
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const requestRef = useRef<number>(undefined);
+  const startTimeRef = useRef<number>(undefined);
+  const timeoutRef = useRef<NodeJS.Timeout>(undefined);
   const frameCountRef = useRef(0);
 
   useEffect(() => {
     if (!triggerOnScroll) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
+    let observer: IntersectionObserver | null = null;
+    let fallbackTimeout: NodeJS.Timeout;
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setIsVisible(true);
+            observer?.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (elementRef.current) {
+        observer.observe(elementRef.current);
+      }
+    } else {
+      // Fallback for browsers without IntersectionObserver
+      setIsVisible(true);
     }
 
-    return () => observer.disconnect();
+    // Safety fallback: force visible after a delay to ensure content always appears
+    fallbackTimeout = setTimeout(() => {
+        setIsVisible(true);
+    }, 500);
+
+    return () => {
+      observer?.disconnect();
+      clearTimeout(fallbackTimeout);
+    };
   }, [triggerOnScroll]);
 
   useEffect(() => {

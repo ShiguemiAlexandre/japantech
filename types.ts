@@ -12,6 +12,7 @@ export interface Project {
   category: string;
   description: string;
   imageUrl: string;
+  status?: string;
   url?: string;
   previewUrl?: string;
 }

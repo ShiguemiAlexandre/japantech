@@ -20,7 +20,7 @@ const FinalCTA: React.FC = () => {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-black hover:bg-zinc-900 text-white px-12 py-5 rounded-sm font-black text-lg transition-all hover:scale-105 active:scale-95 uppercase tracking-tighter cursor-none"
+          className="inline-block bg-black hover:bg-zinc-900 text-white px-12 py-5 rounded-sm font-black text-lg transition-all hover:scale-105 active:scale-95 uppercase tracking-tighter"
         >
           <TranslatedText text={t.cta.button} duration={1000} delay={900} />
         </a>

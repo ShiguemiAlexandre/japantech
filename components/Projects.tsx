@@ -7,16 +7,15 @@ import TranslatedText from './TranslatedText';
 
 const Projects: React.FC = () => {
   const { t } = useLanguage();
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const PROJECTS: Project[] = [
+  
+  const PROJECTS: Project[] = React.useMemo(() => [
     {
       id: '01',
       title: t.projects.items.pmc.title,
       category: t.projects.items.pmc.category,
       description: t.projects.items.pmc.description,
       imageUrl: 'https://img.freepik.com/premium-photo/fortune-telling-tarot-cards-astrology-fortune-telling_687292-7657.jpg',
+      status: t.projects.status_live,
       url: 'https://www.ciganasoraya.com',
       previewUrl: 'https://www.ciganasoraya.com'
     },
@@ -26,8 +25,9 @@ const Projects: React.FC = () => {
       category: t.projects.items.tanganika.category,
       description: t.projects.items.tanganika.description,
       imageUrl: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9af?auto=format&fit=crop&q=80&w=800', 
-      url: 'https://storage.googleapis.com/tanganika/index.html',
-      previewUrl: 'https://storage.googleapis.com/tanganika/index.html'
+      status: t.projects.status_live,
+      url: 'https://tanganika.uy',
+      previewUrl: 'https://tanganika.uy'
     },
     {
       id: '03',
@@ -35,6 +35,7 @@ const Projects: React.FC = () => {
       category: t.projects.items.legal_insight.category,
       description: t.projects.items.legal_insight.description,
       imageUrl: '', 
+      status: t.projects.status_live,
       previewUrl: '' 
     },
     {
@@ -43,39 +44,37 @@ const Projects: React.FC = () => {
       category: t.projects.items.hidrau.category,
       description: t.projects.items.hidrau.description,
       imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800',
+      status: t.projects.status_live,
       url: 'https://storage.googleapis.com/hidraucomp/index.html',
       previewUrl: 'https://storage.googleapis.com/hidraucomp/index.html'
     }
-  ];
+  ], [t]);
 
-  // Update active project when language changes or on init
+  const [activeProject, setActiveProject] = useState<Project>(PROJECTS[0]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Update active project when language changes
   useEffect(() => {
-    console.log('Projects: useEffect triggered. t changed or init.');
-    if (!activeProject) {
-      console.log('Projects: No active project, setting default:', PROJECTS[0]);
-      setActiveProject(PROJECTS[0]);
-    } else {
-      // Find the currently active project in the new translated array
-      const updatedProject = PROJECTS.find(p => p.id === activeProject.id);
-      console.log('Projects: Updating active project:', updatedProject);
-      if (updatedProject) {
-        setActiveProject(updatedProject);
-      }
+    const updatedProject = PROJECTS.find(p => p.id === activeProject.id);
+    if (updatedProject) {
+      setActiveProject(updatedProject);
     }
-  }, [t]);
+  }, [t, PROJECTS]);
+
+  // Safety timeout for iframe loading
+  useEffect(() => {
+    if (isLoading && activeProject.previewUrl) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 5000); // Force hide loader after 5s
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, activeProject.previewUrl]);
 
   const handleProjectChange = (project: Project) => {
-    console.log('Projects: handleProjectChange', project);
     setActiveProject(project);
     setIsLoading(true);
   };
-
-  console.log('Projects: Rendering. activeProject:', activeProject);
-
-  if (!activeProject) {
-      console.log('Projects: activeProject is null, returning null');
-      return null;
-  }
 
   return (
     <section id="projetos" className="py-24 bg-black relative overflow-hidden">
@@ -95,7 +94,7 @@ const Projects: React.FC = () => {
           </h3>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8 h-full">
+        <div className="grid lg:grid-cols-12 gap-8">
           {/* Project List */}
           <div className="lg:col-span-4 flex flex-col gap-4">
             {PROJECTS.map((project, index) => (
@@ -165,7 +164,7 @@ const Projects: React.FC = () => {
 
                       <div className="flex flex-wrap gap-2 mt-4">
                         <span className="px-2 py-1 border border-white/10 text-[10px] font-mono text-gray-500 uppercase">
-                          STATUS: {project.id === '01' ? t.projects.status_beta : t.projects.status_live}
+                          STATUS: {project.status || t.projects.status_live}
                         </span>
                         
                         {project.url && (
@@ -199,7 +198,7 @@ const Projects: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
-                className="h-full flex flex-col border border-white/10 bg-zinc-900/50 backdrop-blur-sm rounded-lg overflow-hidden"
+                className="flex flex-col border border-white/10 bg-zinc-900/90 rounded-lg overflow-hidden h-full min-h-[600px]"
               >
                 {/* Browser Chrome */}
                 <div className="h-8 bg-zinc-950 border-b border-white/10 flex items-center px-4 gap-2">
