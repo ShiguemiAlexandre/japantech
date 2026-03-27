@@ -1,20 +1,19 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Japantech
 
-# Run and deploy your AI Studio app
+Transformando dados em decisões poderosas.
 
-This contains everything you need to run your app locally.
+A Japantech desenvolve sistemas inteligentes e soluções de análise de dados que simplificam operações e fortalecem empresas.
 
-View your app in AI Studio: https://ai.studio/apps/13366ebd-06af-47e9-b735-a1c3cec9e288
+Não criamos apenas software.
+Criamos vantagem competitiva.
 
-## Run Locally
+## 💻 O que fazemos
 
-**Prerequisites:**  Node.js
+- Sistemas personalizados
+- Dashboards estratégicos
+- Automação empresarial
+- Estruturação e análise de dados
 
+## 📊 Nossa missão
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Levar inteligência tecnológica para empresas que querem evoluir com precisão e eficiência.
