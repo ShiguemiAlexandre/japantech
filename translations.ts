@@ -111,6 +111,14 @@ export const translations = {
       nav_title: "Navegação",
       contact_title: "Contato",
       rights: "Japantech Soluções Inteligentes. Todos os direitos reservados."
+    },
+    press: {
+      label: "RECONHECIMENTO",
+      title: "CLIENTES EM",
+      title_highlight: "DESTAQUE",
+      description: "Nossos parceiros alcançando novos patamares e reconhecimento global.",
+      forbes_quote: "Se inspirou em shows de drones, criou empresa de limpeza em altura e agora se expande para Latam e Europa com investimento de US$ 2 milhões",
+      read_more: "Ler reportagem completa na Forbes"
     }
   },
   en: {
@@ -224,6 +232,14 @@ export const translations = {
       nav_title: "Navigation",
       contact_title: "Contact",
       rights: "Japantech Intelligent Solutions. All rights reserved."
+    },
+    press: {
+      label: "RECOGNITION",
+      title: "CLIENTS IN THE",
+      title_highlight: "SPOTLIGHT",
+      description: "Our partners reaching new heights and global recognition.",
+      forbes_quote: "Inspired by drone shows, created a high-altitude cleaning company and now expands to Latam and Europe with a US$ 2 million investment",
+      read_more: "Read full report on Forbes"
     }
   }
 };
