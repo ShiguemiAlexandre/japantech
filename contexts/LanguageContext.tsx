@@ -11,8 +11,10 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const getBrowserLanguage = (): Language =>
-  navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en';
+const getBrowserLanguage = (): Language => {
+  if (typeof navigator === 'undefined') return 'en';
+  return navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en';
+};
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>(getBrowserLanguage);
