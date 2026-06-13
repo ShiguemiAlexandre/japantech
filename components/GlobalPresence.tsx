@@ -239,7 +239,7 @@ const GlobalPresence: React.FC = () => {
           </AnimatePresence>
 
           {/* Overlay Grid Effect */}
-          <div className="absolute inset-0 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay"></div>
+          <div className="absolute inset-0 pointer-events-none bg-[url('/noise.svg')] opacity-10 mix-blend-overlay"></div>
           <div className="absolute inset-0 pointer-events-none bg-grid opacity-20"></div>
         </div>
       </div>

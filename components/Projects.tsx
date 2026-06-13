@@ -47,6 +47,16 @@ const Projects: React.FC = () => {
       status: t.projects.status_live,
       url: 'https://storage.googleapis.com/hidraucomp/index.html',
       previewUrl: 'https://storage.googleapis.com/hidraucomp/index.html'
+    },
+    {
+      id: '05',
+      title: t.projects.items.imperio.title,
+      category: t.projects.items.imperio.category,
+      description: t.projects.items.imperio.description,
+      imageUrl: 'https://img.freepik.com/premium-photo/fortune-telling-tarot-cards-astrology-fortune-telling_687292-7657.jpg',
+      status: t.projects.status_live,
+      url: 'https://imperio.ciganasoraya.com/login',
+      previewUrl: 'https://imperio.ciganasoraya.com/login'
     }
   ], [t]);
 
@@ -219,7 +229,7 @@ const Projects: React.FC = () => {
                   {activeProject.id === '03' ? (
                     <div className="w-full h-full relative flex items-center justify-center bg-zinc-950 overflow-hidden">
                       {/* Secret/Classified Background */}
-                      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+                      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay" />
                       <div className="absolute inset-0 bg-grid opacity-10" />
                       
                       {/* Animated Rings */}

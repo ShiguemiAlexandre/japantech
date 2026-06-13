@@ -4,9 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Japantech — soluções de tecnologia que escalam com o seu negócio. Desenvolvimento de software, infraestrutura e inovação para empresas que querem crescer.">
     <title>Japantech | Tecnologia que Escala</title>
-    <link rel="icon" type="image/png" href="https://storage.googleapis.com/www.japantech.com.br/public/favicon-16x16.png" />
-    <link rel="apple-touch-icon" href="https://storage.googleapis.com/www.japantech.com.br/public/favicon-16x16.png" />
+
+    <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.japantech.com.br/">
+    <meta property="og:title" content="Japantech | Tecnologia que Escala">
+    <meta property="og:description" content="Soluções de tecnologia que escalam com o seu negócio. Desenvolvimento de software, infraestrutura e inovação para empresas que querem crescer.">
+    <meta property="og:image" content="https://storage.googleapis.com/www.japantech.com.br/public/og-image.png">
+    <meta property="og:image:width" content="887">
+    <meta property="og:image:height" content="462">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:site_name" content="Japantech">
+
+    <link rel="canonical" href="https://www.japantech.com.br/">
+
+    <!-- hreflang: signals bilingual content to search engines -->
+    <link rel="alternate" hreflang="pt-BR" href="https://www.japantech.com.br/">
+    <link rel="alternate" hreflang="en" href="https://www.japantech.com.br/">
+    <link rel="alternate" hreflang="x-default" href="https://www.japantech.com.br/">
+
+    <!-- Twitter Card (Twitter/X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.japantech.com.br/">
+    <meta name="twitter:title" content="Japantech | Tecnologia que Escala">
+    <meta name="twitter:description" content="Soluções de tecnologia que escalam com o seu negócio. Desenvolvimento de software, infraestrutura e inovação para empresas que querem crescer.">
+    <meta name="twitter:image" content="https://storage.googleapis.com/www.japantech.com.br/public/og-image.png">
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/favicon-32x32.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
     <style>
@@ -70,7 +97,7 @@
         .noise-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            background: url('/noise.svg');
             opacity: 0.05;
             pointer-events: none;
             z-index: 9999;
@@ -122,16 +149,27 @@
             transform: translateY(0);
         }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.41.0"
-  }
-}
-</script>
+    <!-- JSON-LD: Organization structured data for rich snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Japantech",
+      "url": "https://www.japantech.com.br/",
+      "logo": "https://storage.googleapis.com/www.japantech.com.br/public/og-image.png",
+      "description": "Soluções de tecnologia que escalam com o seu negócio. Desenvolvimento de software, infraestrutura e inovação para empresas que querem crescer.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "availableLanguage": ["Portuguese", "English"]
+      },
+      "sameAs": []
+    }
+    </script>
 <link rel="stylesheet" href="/index.css">
 </head>
 <body>
