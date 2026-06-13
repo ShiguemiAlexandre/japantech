@@ -20,6 +20,7 @@ const TranslatedText: React.FC<TranslatedTextProps> = ({
   triggerOnScroll = true
 }) => {
   const [displayText, setDisplayText] = useState(() => {
+    if (typeof window === 'undefined') return text;
     let initialScramble = '';
     for (let i = 0; i < text.length; i++) {
         if (text[i] === ' ' || text[i] === '\n') {
@@ -152,9 +153,9 @@ const TranslatedText: React.FC<TranslatedTextProps> = ({
   }, [text, duration, delay, isVisible]);
 
   return (
-    <Component ref={elementRef} className={className} aria-label={text}>
+    <Component ref={elementRef} className={className} aria-label={text} suppressHydrationWarning>
       <span className="sr-only">{text}</span>
-      <span aria-hidden="true">
+      <span aria-hidden="true" suppressHydrationWarning>
         {displayText}
       </span>
     </Component>

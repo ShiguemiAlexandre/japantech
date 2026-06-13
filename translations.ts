@@ -74,6 +74,11 @@ export const translations = {
           title: "Hidrau Comp",
           category: "Autoridade Industrial",
           description: "Presença digital de alta performance para o setor industrial. Projetada para transformar visitantes em orçamentos reais, fortalecendo a credibilidade da marca e facilitando a captação de grandes contas B2B."
+        },
+        imperio: {
+          title: "Império Cigana Soraya",
+          category: "Plataforma Educacional",
+          description: "Ecossistema digital completo para o universo esotérico. Plataforma de cursos em vídeo com certificados, biblioteca interativa de arcanos, cristais, rituais, herbário e banhos, oráculos com IA e checkout integrado ao MercadoPago — tudo em um ambiente autenticado e escalável."
         }
       }
     },
@@ -195,6 +200,11 @@ export const translations = {
           title: "Hidrau Comp",
           category: "Industrial Authority",
           description: "High-performance digital presence for the industrial sector. Designed to transform visitors into real quotes, strengthening brand credibility and facilitating the acquisition of large B2B accounts."
+        },
+        imperio: {
+          title: "Império Cigana Soraya",
+          category: "Educational Platform",
+          description: "Complete digital ecosystem for the esoteric universe. Video course platform with certificates, interactive library of arcana, crystals, rituals, herbs and spiritual baths, AI-powered oracle and checkout integrated with MercadoPago — all within an authenticated and scalable environment."
         }
       }
     },
