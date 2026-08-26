@@ -25,7 +25,6 @@ const Header: React.FC = () => {
   }, [isMenuOpen]);
 
   const navLinks = [
-    { name: t.header.about, href: '#about' },
     { name: t.header.services, href: '#services' },
     { name: t.header.projects, href: '#projetos' },
   ];

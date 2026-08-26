@@ -39,7 +39,6 @@ const Footer: React.FC = () => {
               <TranslatedText text={t.footer.nav_title} duration={800} />
             </h4>
             <ul className="space-y-2 text-gray-500 text-xs">
-              <li><a href="#about" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.about} duration={800} delay={100} /></a></li>
               <li><a href="#services" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.services} duration={800} delay={200} /></a></li>
               <li><a href="#projetos" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.projects} duration={800} delay={300} /></a></li>
             </ul>
