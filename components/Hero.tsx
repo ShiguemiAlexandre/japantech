@@ -52,20 +52,20 @@ const Hero: React.FC = () => {
       {/* Main Content Area */}
       <div className="container mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-8 text-left">
-          <div className="inline-flex items-center gap-3 px-3 py-1 mb-6 border-l-2 border-red-600 bg-red-600/5 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-3 px-3 py-1 mb-4 border-l-2 border-red-600 bg-red-600/5 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 bg-red-600 animate-pulse"></span>
             <span className="text-red-500 text-[10px] font-mono font-bold tracking-widest uppercase">
               <TranslatedText text={t.hero.protocol} duration={800} />
             </span>
           </div>
-          
-          <h1 className="text-5xl md:text-[6.5rem] font-black mb-8 leading-[0.9] tracking-tighter uppercase">
+
+          <h1 className="text-5xl md:text-[clamp(2.5rem,8vh,6.5rem)] font-black mb-6 leading-[0.95] tracking-tighter uppercase">
             <TranslatedText text={t.hero.title_part1} duration={1000} delay={0} /> <span className="text-white"><TranslatedText text={t.hero.title_part2} duration={1000} delay={500} /></span> <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-white"><TranslatedText text={t.hero.title_part3} duration={1000} delay={1000} /></span> <br />
             <TranslatedText text={t.hero.title_part4} duration={1000} delay={1500} />
           </h1>
-          
-          <p className="text-gray-400 max-w-xl text-lg mb-10 font-light border-l border-white/10 pl-6">
+
+          <p className="text-gray-400 max-w-xl text-lg mb-6 font-light border-l border-white/10 pl-6">
             <TranslatedText text={t.hero.subtitle} duration={1500} delay={2000} />
           </p>
 
