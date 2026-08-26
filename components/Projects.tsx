@@ -286,6 +286,7 @@ const Projects: React.FC = () => {
                         title={`Preview of ${activeProject.title}`}
                         className={`w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
                         sandbox="allow-scripts allow-same-origin"
+                        loading="lazy"
                         onLoad={() => setIsLoading(false)}
                       />
                       {/* Overlay for interaction hint */}

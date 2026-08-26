@@ -74,7 +74,7 @@ const Press: React.FC = () => {
           <div className="w-full md:w-1/3 relative">
             <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 relative group">
               <img
-                src="https://storage.googleapis.com/www.japantech.com.br/public/drone_flycleaner.jpg"
+                src="/drone-flycleaner.jpg"
                 alt="Flyclean Drone Innovation"
                 className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-700"
                 loading="lazy"

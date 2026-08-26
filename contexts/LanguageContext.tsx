@@ -12,7 +12,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const getBrowserLanguage = (): Language => {
-  if (typeof navigator === 'undefined') return 'en';
+  if (typeof navigator === 'undefined') return 'pt';
   return navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en';
 };
 
