@@ -210,7 +210,26 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('section').forEach(s => sectionObserver.observe(s));
+        const observeSections = (root) => {
+            root.querySelectorAll('section:not(.visible)').forEach(s => sectionObserver.observe(s));
+        };
+        observeSections(document);
+
+        // The sections are rendered by React. In dev (`vite`) #root is still empty when this
+        // script runs, and in production React may re-create the prerendered tree on the
+        // client (hydration mismatch). In both cases the <section> elements that end up in
+        // the DOM are NOT the ones observed above and would stay at opacity:0 forever
+        // (black page, including when opening /#produtos or /#projetos directly).
+        // Watch #root and observe any section inserted later.
+        const appRoot = document.getElementById('root');
+        if (appRoot && 'MutationObserver' in window) {
+            new MutationObserver((mutations) => {
+                if (mutations.some(m => m.addedNodes.length && Array.from(m.addedNodes).some(n => n.nodeType === 1))) {
+                    observeSections(appRoot);
+                }
+            })
+                .observe(appRoot, { childList: true, subtree: true });
+        }
     </script>
 <script type="module" src="/index.tsx"></script>
 </body>
