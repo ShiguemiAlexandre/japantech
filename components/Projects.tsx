@@ -61,9 +61,9 @@ const buildProjects = (t: Translations): Project[] => [
     }
 ];
 
-// Every project in every language: used to reserve the height of the tallest text so the
-// list never grows/shrinks when switching project or language (no layout shift).
-const ALL_VARIANTS = LANGS.map((lang) => ({ tr: translations[lang], projects: buildProjects(translations[lang]) }));
+// Every project in every language: titles/categories reserve the height of the longest
+// variant so the list never grows/shrinks when switching language (no layout shift).
+const ALL_VARIANTS = LANGS.map((lang) => buildProjects(translations[lang]));
 
 /**
  * Fixed-size text slot. Renders every variant stacked in the same grid cell (invisible) so
@@ -112,49 +112,49 @@ const Projects: React.FC = () => {
     setIsLoading(true);
   };
 
-  const renderDetails = (project: Project, tr: Translations, animated: boolean) => (
+  // Fixed-height details: the description is clamped to a fixed number of lines per
+  // breakpoint (picked from the actual line counts so it rarely leaves blank lines) and the
+  // status/link row sits right below it with a fixed height, so every project and language
+  // yields exactly the same card height. Full text stays in `title` and for screen readers.
+  const renderDetails = (project: Project, tr: Translations) => (
     <>
-      <p className="text-gray-400 text-sm leading-relaxed mb-4 mt-2">
-        {animated ? <TranslatedText text={project.description} duration={1500} delay={200} /> : project.description}
+      <p
+        title={project.description}
+        className="text-gray-400 text-sm leading-relaxed mt-2 overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:var(--lines)] h-[calc(var(--lines)*1.625em)] [--lines:6] sm:[--lines:3] lg:[--lines:7] xl:[--lines:5]"
+      >
+        <TranslatedText text={project.description} duration={1500} delay={200} />
       </p>
 
-      {project.id === '03' && (
-        <div className="mb-4 p-4 border border-red-900/50 bg-black rounded-sm">
-           <div className="flex items-center gap-3 mb-2">
-              <div className="w-4 h-4 text-red-600 animate-pulse">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-full h-full">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-              </div>
-              <h3 className="text-sm font-black text-red-600 uppercase tracking-widest">{tr.projects.secret.title}</h3>
-           </div>
-           <p className="text-red-500 font-mono text-[10px] mb-2">{tr.projects.secret.access_denied}</p>
-           <div className="flex justify-between text-[9px] font-mono text-red-700 border-t border-red-900/30 pt-2">
-              <span>{tr.projects.secret.encryption}</span>
-              <span>{tr.projects.secret.status}</span>
-           </div>
-        </div>
-      )}
-
-      <div className="flex flex-wrap gap-2 mt-4">
-        <span className="px-2 py-1 border border-white/10 text-[10px] font-mono text-gray-500 uppercase">
+      <div className="flex flex-nowrap items-center gap-2 mt-4 h-7">
+        <span className="shrink-0 px-2 py-1 border border-white/10 text-[10px] font-mono text-gray-500 uppercase whitespace-nowrap">
           STATUS: {project.status || tr.projects.status_live}
         </span>
-      
-        {project.url && (
-          <a 
+
+        {project.id === '03' ? (
+          <span
+            title={`${tr.projects.secret.access_denied} · ${tr.projects.secret.encryption}`}
+            className="ml-auto flex items-center gap-1.5 px-3 py-1 border border-red-900/60 bg-red-950/30 text-[10px] font-mono font-bold text-red-500 uppercase tracking-widest whitespace-nowrap rounded-sm"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 animate-pulse">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+            {tr.projects.secret.title}
+            <span className="text-red-800 font-normal">· AES-256</span>
+          </span>
+        ) : project.url ? (
+          <a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-2 px-4 py-1 bg-red-600 hover:bg-red-700 text-white text-[10px] font-bold uppercase tracking-widest transition-colors rounded-sm ml-auto"
+            className="ml-auto flex items-center gap-2 px-4 py-1 bg-red-600 hover:bg-red-700 text-white text-[10px] font-bold uppercase tracking-widest transition-colors rounded-sm whitespace-nowrap"
           >
             {tr.projects.access_project}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </a>
-        )}
+        ) : null}
       </div>
     </>
   );
@@ -207,7 +207,7 @@ const Projects: React.FC = () => {
                 
                 <div className="mb-2">
                   <ReservedSlot
-                    variants={ALL_VARIANTS.map(({ projects }) => (
+                    variants={ALL_VARIANTS.map((projects) => (
                       <h4 className="text-xl font-bold uppercase">{projects[index].title}</h4>
                     ))}
                   >
@@ -221,7 +221,7 @@ const Projects: React.FC = () => {
 
                 <div className="mb-2">
                   <ReservedSlot
-                    variants={ALL_VARIANTS.map(({ projects }) => (
+                    variants={ALL_VARIANTS.map((projects) => (
                       <p className="text-xs font-mono uppercase tracking-tight">{projects[index].category}</p>
                     ))}
                   >
@@ -240,15 +240,9 @@ const Projects: React.FC = () => {
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      {/* Same height for every project/language: the opening and closing items
-                          animate between 0 and the same value, so the list keeps its size. */}
-                      <ReservedSlot
-                        variants={ALL_VARIANTS.flatMap(({ tr, projects }) =>
-                          projects.map((p) => renderDetails(p, tr, false))
-                        )}
-                      >
-                        {renderDetails(project, t, true)}
-                      </ReservedSlot>
+                      {/* Same height for every project/language (see renderDetails): the opening
+                          and closing items animate between 0 and the same value. */}
+                      {renderDetails(project, t)}
                     </motion.div>
                   )}
                 </AnimatePresence>
