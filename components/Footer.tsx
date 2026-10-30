@@ -41,6 +41,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2 text-gray-500 text-xs">
               <li><a href="#services" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.services} duration={800} delay={200} /></a></li>
               <li><a href="#projetos" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.projects} duration={800} delay={300} /></a></li>
+              <li><a href="#produtos" className="hover:text-red-500 transition-colors"><TranslatedText text={t.header.products} duration={800} delay={400} /></a></li>
             </ul>
           </div>
 

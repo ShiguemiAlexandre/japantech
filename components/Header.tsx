@@ -27,6 +27,7 @@ const Header: React.FC = () => {
   const navLinks = [
     { name: t.header.services, href: '#services' },
     { name: t.header.projects, href: '#projetos' },
+    { name: t.header.products, href: '#produtos' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

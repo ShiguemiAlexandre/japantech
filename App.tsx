@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Projects from './components/Projects';
+import Product from './components/Product';
 import Press from './components/Press';
 import GlobalPresence from './components/GlobalPresence';
 import FinalCTA from './components/FinalCTA';
@@ -21,6 +22,7 @@ const App: React.FC = () => {
             <Hero />
             <Services />
             <Projects />
+            <Product />
             <Press />
             <GlobalPresence />
             <FinalCTA />

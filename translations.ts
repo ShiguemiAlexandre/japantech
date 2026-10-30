@@ -5,6 +5,7 @@ export const translations = {
       about: "Sobre",
       services: "Serviços",
       projects: "Projetos",
+      products: "Produtos",
       contact: "Falar com Especialista",
       location: "Araraquara/SP"
     },
@@ -82,6 +83,26 @@ export const translations = {
         }
       }
     },
+    product: {
+      label: "Produto Próprio",
+      title: "FEITO PELA",
+      title_highlight: "JAPANTECH",
+      description: "Além de projetos sob medida, desenvolvemos e operamos nossos próprios produtos.",
+      badge: "PRODUTO JAPANTECH",
+      name: "jAPPa ERP",
+      category: "Gestão de Estoque",
+      tagline: "O estoque da oficina em ordem, peça por peça.",
+      summary: "Sistema de estoque para oficinas, feito para o tablet da bancada. Baixa em segundos pelo código de barras ou pelo nome, visão clara do que comprar e controle total de quem faz o quê.",
+      features: [
+        { title: "Baixa rápida", desc: "Código de barras ou nome da peça no tablet: a baixa sai em um toque." },
+        { title: "Painel de compras", desc: "Itens no estoque mínimo ou abaixo, prontos para reposição." },
+        { title: "Saldos negativos & pendências", desc: "Códigos desconhecidos viram pendência, sem travar a operação." },
+        { title: "Controle de usuários", desc: "Perfis Admin, Estoque e Mecânico: cada um vê só o que é seu." }
+      ],
+      cta: "Acessar Projeto",
+      status: "STATUS: LIVE",
+      domain: "erp.japantech.com.br"
+    },
     global: {
       label: "Alcance Global",
       title: "PRESENÇA",
@@ -131,6 +152,7 @@ export const translations = {
       about: "About",
       services: "Services",
       projects: "Projects",
+      products: "Products",
       contact: "Talk to an Expert",
       location: "Araraquara/SP - Brazil"
     },
@@ -207,6 +229,26 @@ export const translations = {
           description: "Complete digital ecosystem for the esoteric universe. Video course platform with certificates, interactive library of arcana, crystals, rituals, herbs and spiritual baths, AI-powered oracle and checkout integrated with MercadoPago — all within an authenticated and scalable environment."
         }
       }
+    },
+    product: {
+      label: "In-House Product",
+      title: "MADE BY",
+      title_highlight: "JAPANTECH",
+      description: "Beyond custom projects, we build and operate our own products.",
+      badge: "JAPANTECH PRODUCT",
+      name: "jAPPa ERP",
+      category: "Inventory Management",
+      tagline: "Your workshop's inventory in order, part by part.",
+      summary: "Inventory system for workshops, built for the tablet on the workbench. Check out parts in seconds by barcode or name, see clearly what needs to be purchased and keep full control over who does what.",
+      features: [
+        { title: "Fast check-out", desc: "Barcode or part name on the tablet: stock is updated in a single tap." },
+        { title: "Purchasing dashboard", desc: "Items at or below minimum stock, ready to be restocked." },
+        { title: "Negative balances & pending items", desc: "Unknown codes become pending items without stopping the operation." },
+        { title: "User control", desc: "Admin, Stock and Mechanic roles: everyone sees only what is theirs." }
+      ],
+      cta: "Access Project",
+      status: "STATUS: LIVE",
+      domain: "erp.japantech.com.br"
     },
     global: {
       label: "Global Reach",
