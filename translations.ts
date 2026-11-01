@@ -5,7 +5,7 @@ export const translations = {
       about: "Sobre",
       services: "Serviços",
       projects: "Projetos",
-      products: "Produtos",
+      products: "Sistemas",
       contact: "Falar com Especialista",
       location: "Araraquara/SP"
     },
@@ -84,23 +84,24 @@ export const translations = {
       }
     },
     product: {
-      label: "Produto Próprio",
+      label: "Sistema Próprio",
       title: "FEITO PELA",
       title_highlight: "JAPANTECH",
-      description: "Além de projetos sob medida, desenvolvemos e operamos nossos próprios produtos.",
-      badge: "PRODUTO JAPANTECH",
+      description: "Além dos projetos sob medida para clientes, desenvolvemos e operamos nossos próprios sistemas.",
+      badge: "SISTEMA JAPANTECH",
       name: "jAPPa ERP",
-      category: "Gestão de Estoque",
-      tagline: "O estoque da oficina em ordem, peça por peça.",
-      summary: "Sistema de estoque para oficinas, feito para o tablet da bancada. Baixa em segundos pelo código de barras ou pelo nome, visão clara do que comprar e controle total de quem faz o quê.",
+      category: "Gestão de Estoque para Oficinas",
+      tagline: "Controle de estoque da oficina, peça por peça.",
+      summary: "Software de gestão de estoque para oficinas, desenvolvido para uso no tablet da bancada. Baixa de peças em segundos por código de barras ou nome, painel de compras, acompanhamento de saldos e pendências e controle de acesso por usuário.",
       features: [
-        { title: "Baixa rápida", desc: "Código de barras ou nome da peça no tablet: a baixa sai em um toque." },
-        { title: "Painel de compras", desc: "Itens no estoque mínimo ou abaixo, prontos para reposição." },
-        { title: "Saldos negativos & pendências", desc: "Códigos desconhecidos viram pendência, sem travar a operação." },
-        { title: "Controle de usuários", desc: "Perfis Admin, Estoque e Mecânico: cada um vê só o que é seu." }
+        { title: "Baixa por código de barras", desc: "Leitura do código ou busca pelo nome no tablet: a baixa é registrada em um toque." },
+        { title: "Painel de compras", desc: "Itens no estoque mínimo ou abaixo dele, organizados para reposição." },
+        { title: "Saldos e pendências", desc: "Saldos negativos e códigos não cadastrados viram pendências, sem interromper a operação." },
+        { title: "Usuários e permissões", desc: "Perfis Admin, Estoque e Mecânico, cada um com acesso apenas ao que lhe compete." }
       ],
-      cta: "Acessar Projeto",
-      status: "STATUS: LIVE",
+      cta: "Acessar sistema",
+      cta_aria: "Acessar o sistema jAPPa ERP (abre em nova aba)",
+      status: "EM PRODUÇÃO",
       domain: "erp.japantech.com.br"
     },
     global: {
@@ -152,7 +153,7 @@ export const translations = {
       about: "About",
       services: "Services",
       projects: "Projects",
-      products: "Products",
+      products: "Systems",
       contact: "Talk to an Expert",
       location: "Araraquara/SP - Brazil"
     },
@@ -231,23 +232,24 @@ export const translations = {
       }
     },
     product: {
-      label: "In-House Product",
+      label: "In-House Software",
       title: "MADE BY",
       title_highlight: "JAPANTECH",
-      description: "Beyond custom projects, we build and operate our own products.",
-      badge: "JAPANTECH PRODUCT",
+      description: "Beyond custom work for clients, we build and operate our own software.",
+      badge: "JAPANTECH SOFTWARE",
       name: "jAPPa ERP",
-      category: "Inventory Management",
-      tagline: "Your workshop's inventory in order, part by part.",
-      summary: "Inventory system for workshops, built for the tablet on the workbench. Check out parts in seconds by barcode or name, see clearly what needs to be purchased and keep full control over who does what.",
+      category: "Workshop Inventory Management",
+      tagline: "Workshop inventory control, part by part.",
+      summary: "Inventory management software for repair workshops, designed for the workbench tablet. Part check-out in seconds by barcode or name, a purchasing dashboard, balance and pending-item tracking, and per-user access control.",
       features: [
-        { title: "Fast check-out", desc: "Barcode or part name on the tablet: stock is updated in a single tap." },
-        { title: "Purchasing dashboard", desc: "Items at or below minimum stock, ready to be restocked." },
-        { title: "Negative balances & pending items", desc: "Unknown codes become pending items without stopping the operation." },
-        { title: "User control", desc: "Admin, Stock and Mechanic roles: everyone sees only what is theirs." }
+        { title: "Barcode check-out", desc: "Scan the barcode or search by name on the tablet: the check-out is recorded in one tap." },
+        { title: "Purchasing dashboard", desc: "Items at or below minimum stock, organized for restocking." },
+        { title: "Balances & pending items", desc: "Negative balances and unregistered codes become pending items without interrupting operations." },
+        { title: "Users & permissions", desc: "Admin, Stock and Mechanic roles, each with access limited to its own scope." }
       ],
-      cta: "Access Project",
-      status: "STATUS: LIVE",
+      cta: "Access system",
+      cta_aria: "Access the jAPPa ERP system (opens in a new tab)",
+      status: "IN PRODUCTION",
       domain: "erp.japantech.com.br"
     },
     global: {

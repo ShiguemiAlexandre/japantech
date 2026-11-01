@@ -8,9 +8,9 @@ const PRODUCT_URL = 'https://erp.japantech.com.br';
 const FEATURE_ICONS = [ScanBarcode, ShoppingCart, TriangleAlert, Users];
 
 /**
- * In-house product showcase (jAPPa ERP).
+ * In-house software showcase (jAPPa ERP).
  * Kept separate from the client portfolio (Projects) on purpose: this is a
- * Japantech-owned product. The preview is a static tablet mockup instead of an
+ * Japantech-owned system. The preview is a static tablet mockup instead of an
  * iframe — the real app is behind a login, and a third-party iframe would add
  * another slow-loading resource to the page.
  */
@@ -61,7 +61,8 @@ const Product: React.FC = () => {
                 <BadgeCheck className="w-3.5 h-3.5" />
                 {p.badge}
               </span>
-              <span className="px-2 py-1 border border-white/10 text-[10px] font-mono text-gray-500 uppercase">
+              <span className="inline-flex items-center gap-1.5 px-2 py-1 border border-white/10 text-[10px] font-mono text-gray-400 uppercase tracking-widest">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
                 {p.status}
               </span>
             </div>
@@ -98,6 +99,7 @@ const Product: React.FC = () => {
                 href={PRODUCT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={p.cta_aria}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-widest transition-colors rounded-sm"
               >
                 {p.cta}
