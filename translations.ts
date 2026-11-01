@@ -100,7 +100,7 @@ export const translations = {
         { title: "Usuários e permissões", desc: "Perfis Admin, Estoque e Mecânico, cada um com acesso apenas ao que lhe compete." }
       ],
       gallery: {
-        label: "Telas do sistema",
+        intro: { caption: "jAPPa ERP em resumo (ilustração)", alt: "Ilustração do jAPPa ERP no tablet: leitura de código de barras, baixa confirmada e contadores do painel de compras, pendências e usuários" },
         region: "Galeria de telas do jAPPa ERP",
         note: "Dados fictícios de demonstração",
         prev: "Tela anterior",
@@ -268,7 +268,7 @@ export const translations = {
         { title: "Users & permissions", desc: "Admin, Stock and Mechanic roles, each with access limited to its own scope." }
       ],
       gallery: {
-        label: "System screens",
+        intro: { caption: "jAPPa ERP at a glance (illustration)", alt: "Illustration of jAPPa ERP on a tablet: barcode reading, confirmed check-out and counters for purchasing, pending items and users" },
         region: "jAPPa ERP screen gallery",
         note: "Fictitious demo data",
         prev: "Previous screen",

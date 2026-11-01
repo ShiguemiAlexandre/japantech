@@ -11,9 +11,9 @@ const FEATURE_ICONS = [ScanBarcode, ShoppingCart, TriangleAlert, Users];
 /**
  * In-house software showcase (jAPPa ERP).
  * Kept separate from the client portfolio (Projects) on purpose: this is a
- * Japantech-owned system. The preview is a static tablet mockup instead of an
- * iframe — the real app is behind a login, and a third-party iframe would add
- * another slow-loading resource to the page.
+ * Japantech-owned system. The preview is a tablet mockup (no iframe — the real app
+ * is behind a login) whose screen is a carousel: a drawn illustration first, then
+ * real screenshots with demo data (see ProductCarousel).
  */
 const Product: React.FC = () => {
   const { t } = useLanguage();
@@ -110,52 +110,44 @@ const Product: React.FC = () => {
             </div>
           </div>
 
-          {/* Static tablet mockup (no iframe) */}
-          <div className="lg:col-span-6 relative bg-zinc-900/80 border-t lg:border-t-0 lg:border-l border-white/10 flex items-center justify-center p-8 md:p-12 overflow-hidden" aria-hidden="true">
+          {/* Tablet mockup = carousel: slide 1 is the drawn illustration, then real screens */}
+          <div className="lg:col-span-6 relative bg-zinc-900/80 border-t lg:border-t-0 lg:border-l border-white/10 flex items-center justify-center p-4 sm:p-8 overflow-hidden">
             <div className="absolute inset-0 bg-grid opacity-20" />
-            <div className="relative w-full max-w-md rounded-2xl border-4 border-zinc-800 bg-black shadow-2xl shadow-red-900/20">
-              <div className="h-7 bg-zinc-950 border-b border-white/10 flex items-center justify-between px-4 rounded-t-xl">
-                <span className="font-jp text-xs text-red-600">伊藤</span>
-                <span className="text-[9px] font-mono text-gray-500">{p.name.toUpperCase()}</span>
-                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-              </div>
-              <div className="p-5 space-y-4">
-                <div className="flex items-center gap-3 p-3 border border-red-600/60 bg-zinc-950">
-                  <ScanBarcode className="w-5 h-5 text-red-600 shrink-0" />
-                  <span className="font-mono text-sm text-white tracking-widest">7891234567895</span>
-                  <span className="ml-auto w-0.5 h-4 bg-red-600 animate-pulse" />
-                </div>
-                <div className="flex items-center justify-between p-3 bg-zinc-900 border border-white/5">
-                  <div>
-                    <p className="text-xs font-bold text-white uppercase">{p.features[0].title}</p>
-                    <p className="text-[10px] font-mono text-gray-500">−1 UN</p>
+            <ProductCarousel
+              illustration={
+                <div className="p-5 space-y-4">
+                  <div className="flex items-center gap-3 p-3 border border-red-600/60 bg-zinc-950">
+                    <ScanBarcode className="w-5 h-5 text-red-600 shrink-0" />
+                    <span className="font-mono text-sm text-white tracking-widest">7891234567895</span>
+                    <span className="ml-auto w-0.5 h-4 bg-red-600 animate-pulse" />
                   </div>
-                  <span className="px-3 py-1 bg-red-600 text-white text-[10px] font-bold uppercase">OK</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  {[{ v: '12', l: p.features[1].title }, { v: '3', l: p.features[2].title }, { v: '4', l: p.features[3].title }].map((k, i) => (
-                    <div key={i} className="p-3 bg-zinc-900 border border-white/5">
-                      <p className={`text-2xl font-black ${i === 1 ? 'text-red-600' : 'text-white'}`}>{k.v}</p>
-                      <p className="text-[8px] font-mono text-gray-500 uppercase leading-tight mt-1">{k.l}</p>
+                  <div className="flex items-center justify-between p-3 bg-zinc-900 border border-white/5">
+                    <div>
+                      <p className="text-xs font-bold text-white uppercase">{p.features[0].title}</p>
+                      <p className="text-[10px] font-mono text-gray-500">−1 UN</p>
                     </div>
-                  ))}
+                    <span className="px-3 py-1 bg-red-600 text-white text-[10px] font-bold uppercase">OK</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[{ v: '12', l: p.features[1].title }, { v: '3', l: p.features[2].title }, { v: '4', l: p.features[3].title }].map((k, i) => (
+                      <div key={i} className="p-3 bg-zinc-900 border border-white/5">
+                        <p className={`text-2xl font-black ${i === 1 ? 'text-red-600' : 'text-white'}`}>{k.v}</p>
+                        <p className="text-[8px] font-mono text-gray-500 uppercase leading-tight mt-1">{k.l}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-2">
+                    {[80, 55, 30].map((w, i) => (
+                      <div key={i} className="h-2 bg-zinc-900">
+                        <div className={`h-2 ${i === 2 ? 'bg-red-600' : 'bg-zinc-700'}`} style={{ width: `${w}%` }} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  {[80, 55, 30].map((w, i) => (
-                    <div key={i} className="h-2 bg-zinc-900">
-                      <div className={`h-2 ${i === 2 ? 'bg-red-600' : 'bg-zinc-700'}`} style={{ width: `${w}%` }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+              }
+            />
           </div>
         </motion.div>
-
-        {/* Real screens (demo data), below the illustrative mockup */}
-        <div className="mt-16">
-          <ProductCarousel />
-        </div>
       </div>
     </section>
   );

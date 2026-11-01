@@ -3,28 +3,28 @@ import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 /**
- * Carousel with real jAPPa ERP screens (fictitious demo data).
+ * The jAPPa ERP tablet mockup, whose screen is a carousel: slide 1 is the drawn illustration
+ * (passed in as `illustration`), followed by real screenshots with fictitious demo data.
  *
- * Layout: one frame with a FIXED aspect ratio per breakpoint (phone screens 3:5 below `sm`,
- * desktop screens 16:10 from `sm` up). All slides are stacked in that frame and cross-fade, and
- * the images use object-fit: contain on a graphite background, so changing slides never
- * changes the height. A <picture> serves the phone or desktop print of the same screen per
- * breakpoint; slides that only exist as a phone print (fast check-out) show it centered.
- * Captions are stacked in one grid cell so the caption row always has the tallest caption's height.
+ * Layout: the tablet screen has a FIXED aspect ratio per breakpoint (3:4 on phones, 16:10 from
+ * `sm`, 4:3 at `lg` where the column is narrow, 16:10 again from `xl`). All slides are stacked in
+ * it and cross-fade; screenshots use object-fit: contain on a graphite background, and a
+ * <picture> serves the phone print below `sm` and the desktop print above. Captions (plus the
+ * demo-data note) are stacked in one grid cell, so nothing changes height when slides change.
  *
  * Accessibility: WAI-ARIA carousel pattern. Rotation pauses on hover, focus, touch, when
  * off-screen, with the pause button, and is off with prefers-reduced-motion. Arrow/Home/End keys
  * work on the region, and aria-live is "polite" whenever rotation is not running.
  */
-const SLIDES: { file: string; desktop: boolean }[] = [
-  { file: '01-painel', desktop: true },
-  { file: '02-baixa-rapida', desktop: false },
-  { file: '03-cadastro-ia', desktop: true },
-  { file: '04-varias-fotos', desktop: true },
-  { file: '05-nota-fiscal', desktop: true },
-  { file: '06-historico', desktop: true },
-  { file: '07-produtos', desktop: true },
-];
+const SCREENS = [
+  '01-painel',
+  '02-baixa-rapida',
+  '03-cadastro-ia',
+  '04-varias-fotos',
+  '05-nota-fiscal',
+  '06-historico',
+  '07-produtos',
+] as const;
 const INTERVAL_MS = 5000;
 const TOUCH_RESUME_MS = 8000;
 
@@ -40,10 +40,12 @@ const usePrefersReducedMotion = () => {
   return reduced;
 };
 
-const ProductCarousel: React.FC = () => {
+const ProductCarousel: React.FC<{ illustration: React.ReactNode }> = ({ illustration }) => {
   const { t } = useLanguage();
   const g = t.product.gallery;
-  const total = SLIDES.length;
+  // Slide 0 is the illustration, slides 1..N the screenshots.
+  const captions = [g.intro, ...g.slides];
+  const total = SCREENS.length + 1;
 
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
@@ -118,6 +120,15 @@ const ProductCarousel: React.FC = () => {
   const btn =
     'inline-flex items-center justify-center w-9 h-9 border border-white/15 bg-black text-gray-300 hover:text-white hover:border-red-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 transition-colors';
 
+  const slideProps = (i: number) => ({
+    role: 'group',
+    'aria-roledescription': 'slide',
+    'aria-label': `${i + 1} ${g.of} ${total}`,
+    'aria-hidden': i !== index,
+    inert: i !== index,
+    className: `absolute inset-0 ${fade} ${i === index ? 'opacity-100' : 'opacity-0'}`,
+  });
+
   return (
     <div
       ref={rootRef}
@@ -132,87 +143,78 @@ const ProductCarousel: React.FC = () => {
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
       }}
-      className="max-w-4xl mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-4 focus-visible:ring-offset-zinc-950"
+      className="relative w-full max-w-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-4 focus-visible:ring-offset-zinc-900"
     >
-      <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4 mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-[1px] bg-red-600" />
-          <span className="text-xs font-mono text-red-600 uppercase tracking-widest whitespace-nowrap">{g.label}</span>
+      {/* Tablet */}
+      <div className="rounded-2xl border-4 border-zinc-800 bg-black shadow-2xl shadow-red-900/20">
+        <div className="h-7 bg-zinc-950 border-b border-white/10 flex items-center justify-between px-4 rounded-t-xl" aria-hidden="true">
+          <span className="font-jp text-xs text-red-600">伊藤</span>
+          <span className="text-[9px] font-mono text-gray-500">{t.product.name.toUpperCase()}</span>
+          <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
         </div>
-        <span className="pl-12 sm:pl-0 text-[10px] font-mono text-gray-600 uppercase tracking-widest whitespace-nowrap">{g.note}</span>
-      </div>
 
-      {/* Fixed-ratio frame: slides are stacked and cross-fade, so the height never changes. */}
-      <div
-        className="relative w-full aspect-[3/5] sm:aspect-[16/10] bg-zinc-900 border border-red-600/60 overflow-hidden touch-pan-y"
-        aria-live={rotating ? 'off' : 'polite'}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-        onPointerCancel={() => {
-          swipeStart.current = null;
-        }}
-      >
-        <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
-        <div className="absolute -top-px -left-px w-5 h-5 border-t-2 border-l-2 border-red-600 z-10 pointer-events-none" />
-        <div className="absolute -bottom-px -right-px w-5 h-5 border-b-2 border-r-2 border-red-600 z-10 pointer-events-none" />
-        {SLIDES.map((s, i) => {
-          const active = i === index;
-          return (
-            <div
-              key={s.file}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${i + 1} ${g.of} ${total}`}
-              aria-hidden={!active}
-              inert={!active}
-              className={`absolute inset-0 ${fade} ${active ? 'opacity-100' : 'opacity-0'}`}
-            >
+        {/* Screen: fixed ratio per breakpoint, slides stacked and cross-fading */}
+        <div
+          className="relative w-full aspect-[3/4] sm:aspect-[16/10] lg:aspect-[4/3] xl:aspect-[16/10] bg-zinc-900 overflow-hidden rounded-b-xl touch-pan-y"
+          aria-live={rotating ? 'off' : 'polite'}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerCancel={() => {
+            swipeStart.current = null;
+          }}
+        >
+          <div {...slideProps(0)}>
+            <div role="img" aria-label={g.intro.alt} className="w-full h-full flex flex-col justify-center bg-black">
+              {illustration}
+            </div>
+          </div>
+          {SCREENS.map((file, k) => (
+            <div key={file} {...slideProps(k + 1)}>
               <picture>
-                {s.desktop && (
-                  <source media="(min-width: 640px)" srcSet={`/erp/${s.file}-desktop.webp`} width={1280} height={800} />
-                )}
+                <source media="(min-width: 640px)" srcSet={`/erp/${file}-desktop.webp`} width={1280} height={800} />
                 <img
-                  src={`/erp/${s.file}-mobile.webp`}
+                  src={`/erp/${file}-mobile.webp`}
                   width={720}
                   height={1558}
                   loading="lazy"
                   decoding="async"
                   draggable={false}
-                  alt={g.slides[i].alt}
+                  alt={g.slides[k].alt}
                   className="absolute inset-0 w-full h-full object-contain select-none"
                 />
               </picture>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
-      {/* Caption: every caption sits in the same grid cell, so the row keeps the tallest height. */}
+      {/* Caption + demo-data note (only on real screens), stacked so the row keeps one height */}
       <div className="flex items-start gap-3 mt-4">
         <span className="shrink-0 font-mono text-xs text-red-600 tracking-widest pt-px" aria-hidden="true">
           {pad(index + 1)} / {pad(total)}
         </span>
         <div className="grid flex-1 min-w-0">
-          {SLIDES.map((s, i) => (
-            <p
-              key={s.file}
+          {captions.map((c, i) => (
+            <div
+              key={i}
               aria-hidden={i !== index}
-              className={`col-start-1 row-start-1 font-mono text-xs text-gray-300 uppercase tracking-wider leading-relaxed ${fade} ${
-                i === index ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`col-start-1 row-start-1 ${fade} ${i === index ? 'opacity-100' : 'opacity-0'}`}
             >
-              {g.slides[i].caption}
-            </p>
+              <p className="font-mono text-xs text-gray-300 uppercase tracking-wider leading-relaxed">{c.caption}</p>
+              <p className={`font-mono text-[10px] text-gray-600 uppercase tracking-widest mt-1 ${i === 0 ? 'invisible' : ''}`}>
+                {g.note}
+              </p>
+            </div>
           ))}
         </div>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-3 mt-4">
+      <div className="flex items-center gap-3 mt-3">
         <div className="flex items-center flex-wrap">
-          {SLIDES.map((s, i) => (
+          {captions.map((_, i) => (
             <button
-              key={s.file}
+              key={i}
               type="button"
               onClick={() => go(i)}
               aria-label={`${g.goto} ${i + 1} ${g.of} ${total}`}
