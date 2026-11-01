@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ScanBarcode, ShoppingCart, TriangleAlert, Users, ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import TranslatedText from './TranslatedText';
+import ProductCarousel from './ProductCarousel';
 
 const PRODUCT_URL = 'https://erp.japantech.com.br';
 const FEATURE_ICONS = [ScanBarcode, ShoppingCart, TriangleAlert, Users];
@@ -150,6 +151,11 @@ const Product: React.FC = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Real screens (demo data), below the illustrative mockup */}
+        <div className="mt-16">
+          <ProductCarousel />
+        </div>
       </div>
     </section>
   );

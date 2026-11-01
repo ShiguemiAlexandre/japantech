@@ -99,6 +99,26 @@ export const translations = {
         { title: "Saldos e pendências", desc: "Saldos negativos e códigos não cadastrados viram pendências, sem interromper a operação." },
         { title: "Usuários e permissões", desc: "Perfis Admin, Estoque e Mecânico, cada um com acesso apenas ao que lhe compete." }
       ],
+      gallery: {
+        label: "Telas do sistema",
+        region: "Galeria de telas do jAPPa ERP",
+        note: "Dados fictícios de demonstração",
+        prev: "Tela anterior",
+        next: "Próxima tela",
+        goto: "Ir para a tela",
+        of: "de",
+        pause: "Pausar troca automática",
+        play: "Retomar troca automática",
+        slides: [
+          { caption: "Painel: itens a comprar e pendências", alt: "Painel do jAPPa ERP com itens a comprar, saldos negativos, pendências abertas, lista de compras e últimos movimentos" },
+          { caption: "Baixa rápida pelo código de barras", alt: "Tela de baixa rápida no celular confirmando a baixa de uma pastilha de freio com o saldo atualizado" },
+          { caption: "Cadastro por foto: a IA preenche os campos", alt: "Formulário de novo produto com marca, referência e categoria preenchidas pela IA, destacadas em azul" },
+          { caption: "Várias fotos e alerta de duplicados", alt: "Cadastro com quatro fotos analisadas pela IA e aviso de possíveis produtos duplicados" },
+          { caption: "Entrada por nota fiscal lida pela IA", alt: "Conferência de nota fiscal lida pela IA, com fornecedor, número da nota e itens casados com o estoque" },
+          { caption: "Histórico completo de cada peça", alt: "Ficha do produto com o histórico de baixas e entradas, responsável, ordem de serviço e saldo" },
+          { caption: "Produtos: busca por nome, referência ou código", alt: "Lista de produtos com busca, leitura de código de barras e saldo de cada peça" }
+        ]
+      },
       cta: "Acessar sistema",
       cta_aria: "Acessar o sistema jAPPa ERP (abre em nova aba)",
       status: "EM PRODUÇÃO",
@@ -247,6 +267,26 @@ export const translations = {
         { title: "Balances & pending items", desc: "Negative balances and unregistered codes become pending items without interrupting operations." },
         { title: "Users & permissions", desc: "Admin, Stock and Mechanic roles, each with access limited to its own scope." }
       ],
+      gallery: {
+        label: "System screens",
+        region: "jAPPa ERP screen gallery",
+        note: "Fictitious demo data",
+        prev: "Previous screen",
+        next: "Next screen",
+        goto: "Go to screen",
+        of: "of",
+        pause: "Pause automatic rotation",
+        play: "Resume automatic rotation",
+        slides: [
+          { caption: "Dashboard: items to buy and pending issues", alt: "jAPPa ERP dashboard with items to buy, negative balances, open pending items, shopping list and latest movements" },
+          { caption: "Fast barcode check-out", alt: "Fast check-out screen on a phone confirming a brake pad check-out with the updated balance" },
+          { caption: "Photo-based registration: AI fills in the fields", alt: "New product form with brand, reference and category filled in by AI, highlighted in blue" },
+          { caption: "Multiple photos and duplicate alerts", alt: "Product registration with four photos analyzed by AI and a warning about possible duplicate products" },
+          { caption: "Stock entry from an AI-read invoice", alt: "Review of an invoice read by AI, with supplier, invoice number and items matched to stock" },
+          { caption: "Full history for every part", alt: "Product sheet with check-out and entry history, user, work order and balance" },
+          { caption: "Products: search by name, reference or barcode", alt: "Product list with search, barcode reading and the balance of each part" }
+        ]
+      },
       cta: "Access system",
       cta_aria: "Access the jAPPa ERP system (opens in a new tab)",
       status: "IN PRODUCTION",
