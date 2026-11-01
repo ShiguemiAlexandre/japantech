@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import ProductLightbox from './ProductLightbox';
 
 /**
  * The jAPPa ERP tablet mockup, whose screen is a carousel: slide 1 is the drawn illustration
@@ -12,9 +13,10 @@ import { useLanguage } from '../contexts/LanguageContext';
  * <picture> serves the phone print below `sm` and the desktop print above. Captions (plus the
  * demo-data note) are stacked in one grid cell, so nothing changes height when slides change.
  *
- * Accessibility: WAI-ARIA carousel pattern. Rotation pauses on hover, focus, touch, when
- * off-screen, with the pause button, and is off with prefers-reduced-motion. Arrow/Home/End keys
- * work on the region, and aria-live is "polite" whenever rotation is not running.
+ * Accessibility: WAI-ARIA carousel pattern. Rotation (every 3s) pauses on hover, focus, touch,
+ * when off-screen and while the lightbox is open, and is off with prefers-reduced-motion.
+ * Arrow/Home/End keys work on the region, and aria-live is "polite" whenever rotation is not
+ * running. Real screens are buttons that open ProductLightbox; the illustration is not zoomable.
  */
 const SCREENS = [
   '01-painel',
@@ -25,8 +27,8 @@ const SCREENS = [
   '06-historico',
   '07-produtos',
 ] as const;
-const INTERVAL_MS = 5000;
-const TOUCH_RESUME_MS = 8000;
+const INTERVAL_MS = 3000;
+const TOUCH_RESUME_MS = 6000;
 
 const usePrefersReducedMotion = () => {
   const [reduced, setReduced] = useState(false);
@@ -51,15 +53,16 @@ const ProductCarousel: React.FC<{ illustration: React.ReactNode }> = ({ illustra
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [touched, setTouched] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
+  const [lightbox, setLightbox] = useState(false);
   const [inView, setInView] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
 
   const rootRef = useRef<HTMLDivElement>(null);
   const touchTimer = useRef<number | undefined>(undefined);
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const swiped = useRef(false);
 
-  const rotating = !reducedMotion && !userPaused && !hovered && !focused && !touched && inView;
+  const rotating = !reducedMotion && !lightbox && !hovered && !focused && !touched && inView;
 
   const go = useCallback((i: number) => setIndex(((i % total) + total) % total), [total]);
   const prev = () => go(index - 1);
@@ -98,6 +101,7 @@ const ProductCarousel: React.FC<{ illustration: React.ReactNode }> = ({ illustra
   };
 
   const onPointerDown = (e: React.PointerEvent) => {
+    swiped.current = false;
     if (e.pointerType === 'mouse') return;
     window.clearTimeout(touchTimer.current);
     setTouched(true);
@@ -109,7 +113,10 @@ const ProductCarousel: React.FC<{ illustration: React.ReactNode }> = ({ illustra
     swipeStart.current = null;
     if (s) {
       const dx = e.clientX - s.x;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(e.clientY - s.y)) (dx < 0 ? next : prev)();
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(e.clientY - s.y)) {
+        swiped.current = true;
+        (dx < 0 ? next : prev)();
+      }
     }
     window.clearTimeout(touchTimer.current);
     touchTimer.current = window.setTimeout(() => setTouched(false), TOUCH_RESUME_MS);
@@ -119,6 +126,17 @@ const ProductCarousel: React.FC<{ illustration: React.ReactNode }> = ({ illustra
   const pad = (n: number) => String(n).padStart(2, '0');
   const btn =
     'inline-flex items-center justify-center w-9 h-9 border border-white/15 bg-black text-gray-300 hover:text-white hover:border-red-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 transition-colors';
+
+  const openLightbox = () => {
+    if (!swiped.current) setLightbox(true);
+  };
+  const closeLightbox = () => {
+    setLightbox(false);
+    // Return focus to the enlarge button of the screen now shown (index may have changed).
+    requestAnimationFrame(() =>
+      rootRef.current?.querySelector<HTMLElement>(`[data-zoom="${index}"]`)?.focus({ preventScroll: true }),
+    );
+  };
 
   const slideProps = (i: number) => ({
     role: 'group',
@@ -130,125 +148,144 @@ const ProductCarousel: React.FC<{ illustration: React.ReactNode }> = ({ illustra
   });
 
   return (
-    <div
-      ref={rootRef}
-      role="region"
-      aria-roledescription="carousel"
-      aria-label={g.region}
-      tabIndex={0}
-      onKeyDown={onKeyDown}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
-      }}
-      className="relative w-full max-w-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-4 focus-visible:ring-offset-zinc-900"
-    >
-      {/* Tablet */}
-      <div className="rounded-2xl border-4 border-zinc-800 bg-black shadow-2xl shadow-red-900/20">
-        <div className="h-7 bg-zinc-950 border-b border-white/10 flex items-center justify-between px-4 rounded-t-xl" aria-hidden="true">
-          <span className="font-jp text-xs text-red-600">伊藤</span>
-          <span className="text-[9px] font-mono text-gray-500">{t.product.name.toUpperCase()}</span>
-          <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-        </div>
-
-        {/* Screen: fixed ratio per breakpoint, slides stacked and cross-fading */}
-        <div
-          className="relative w-full aspect-[3/4] sm:aspect-[16/10] lg:aspect-[4/3] xl:aspect-[16/10] bg-zinc-900 overflow-hidden rounded-b-xl touch-pan-y"
-          aria-live={rotating ? 'off' : 'polite'}
-          onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp}
-          onPointerCancel={() => {
-            swipeStart.current = null;
-          }}
-        >
-          <div {...slideProps(0)}>
-            <div role="img" aria-label={g.intro.alt} className="w-full h-full flex flex-col justify-center bg-black">
-              {illustration}
-            </div>
+    <>
+      <div
+        ref={rootRef}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={g.region}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setFocused(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
+        }}
+        className="relative w-full max-w-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-4 focus-visible:ring-offset-zinc-900"
+      >
+        {/* Tablet */}
+        <div className="rounded-2xl border-4 border-zinc-800 bg-black shadow-2xl shadow-red-900/20">
+          <div
+            className="h-7 bg-zinc-950 border-b border-white/10 flex items-center justify-between px-4 rounded-t-xl"
+            aria-hidden="true"
+          >
+            <span className="font-jp text-xs text-red-600">伊藤</span>
+            <span className="text-[9px] font-mono text-gray-500">{t.product.name.toUpperCase()}</span>
+            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
           </div>
-          {SCREENS.map((file, k) => (
-            <div key={file} {...slideProps(k + 1)}>
-              <picture>
-                <source media="(min-width: 640px)" srcSet={`/erp/${file}-desktop.webp`} width={1280} height={800} />
-                <img
-                  src={`/erp/${file}-mobile.webp`}
-                  width={720}
-                  height={1558}
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                  alt={g.slides[k].alt}
-                  className="absolute inset-0 w-full h-full object-contain select-none"
+
+          {/* Screen: fixed ratio per breakpoint, slides stacked and cross-fading */}
+          <div
+            className="relative w-full aspect-[3/4] sm:aspect-[16/10] lg:aspect-[4/3] xl:aspect-[16/10] bg-zinc-900 overflow-hidden rounded-b-xl touch-pan-y"
+            aria-live={rotating ? 'off' : 'polite'}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={() => {
+              swipeStart.current = null;
+            }}
+          >
+            <div {...slideProps(0)}>
+              <div role="img" aria-label={g.intro.alt} className="w-full h-full flex flex-col justify-center bg-black">
+                {illustration}
+              </div>
+            </div>
+            {SCREENS.map((file, k) => (
+              <div key={file} {...slideProps(k + 1)}>
+                <button
+                  type="button"
+                  data-zoom={k + 1}
+                  onClick={openLightbox}
+                  aria-label={`${g.enlarge}: ${g.slides[k].caption}`}
+                  className="group absolute inset-0 w-full h-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-red-600"
+                >
+                  <picture>
+                    <source media="(min-width: 640px)" srcSet={`/erp/${file}-desktop.webp`} width={1280} height={800} />
+                    <img
+                      src={`/erp/${file}-mobile.webp`}
+                      width={720}
+                      height={1558}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      alt={g.slides[k].alt}
+                      className="absolute inset-0 w-full h-full object-contain select-none"
+                    />
+                  </picture>
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-2 right-2 inline-flex items-center justify-center w-8 h-8 bg-black/70 border border-white/15 text-gray-300 group-hover:text-white group-hover:border-red-600 transition-colors"
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                  </span>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Caption + demo-data note (only on real screens), stacked so the row keeps one height */}
+        <div className="flex items-start gap-3 mt-4">
+          <span className="shrink-0 font-mono text-xs text-red-600 tracking-widest pt-px" aria-hidden="true">
+            {pad(index + 1)} / {pad(total)}
+          </span>
+          <div className="grid flex-1 min-w-0">
+            {captions.map((c, i) => (
+              <div
+                key={i}
+                aria-hidden={i !== index}
+                className={`col-start-1 row-start-1 ${fade} ${i === index ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <p className="font-mono text-xs text-gray-300 uppercase tracking-wider leading-relaxed">{c.caption}</p>
+                <p className={`font-mono text-[10px] text-gray-600 uppercase tracking-widest mt-1 ${i === 0 ? 'invisible' : ''}`}>
+                  {g.note}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center gap-3 mt-3">
+          <div className="flex items-center flex-wrap">
+            {captions.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => go(i)}
+                aria-label={`${g.goto} ${i + 1} ${g.of} ${total}`}
+                aria-current={i === index ? 'true' : undefined}
+                className="group p-2 -m-0.5 focus-visible:outline-none"
+              >
+                <span
+                  className={`block h-1.5 transition-all duration-300 motion-reduce:transition-none group-focus-visible:ring-2 group-focus-visible:ring-red-600 ${
+                    i === index ? 'w-6 bg-red-600' : 'w-1.5 bg-white/25 group-hover:bg-white/60'
+                  }`}
                 />
-              </picture>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Caption + demo-data note (only on real screens), stacked so the row keeps one height */}
-      <div className="flex items-start gap-3 mt-4">
-        <span className="shrink-0 font-mono text-xs text-red-600 tracking-widest pt-px" aria-hidden="true">
-          {pad(index + 1)} / {pad(total)}
-        </span>
-        <div className="grid flex-1 min-w-0">
-          {captions.map((c, i) => (
-            <div
-              key={i}
-              aria-hidden={i !== index}
-              className={`col-start-1 row-start-1 ${fade} ${i === index ? 'opacity-100' : 'opacity-0'}`}
-            >
-              <p className="font-mono text-xs text-gray-300 uppercase tracking-wider leading-relaxed">{c.caption}</p>
-              <p className={`font-mono text-[10px] text-gray-600 uppercase tracking-widest mt-1 ${i === 0 ? 'invisible' : ''}`}>
-                {g.note}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Controls */}
-      <div className="flex items-center gap-3 mt-3">
-        <div className="flex items-center flex-wrap">
-          {captions.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => go(i)}
-              aria-label={`${g.goto} ${i + 1} ${g.of} ${total}`}
-              aria-current={i === index ? 'true' : undefined}
-              className="group p-2 -m-0.5 focus-visible:outline-none"
-            >
-              <span
-                className={`block h-1.5 transition-all duration-300 motion-reduce:transition-none group-focus-visible:ring-2 group-focus-visible:ring-red-600 ${
-                  i === index ? 'w-6 bg-red-600' : 'w-1.5 bg-white/25 group-hover:bg-white/60'
-                }`}
-              />
+              </button>
+            ))}
+          </div>
+          <div className="ml-auto flex items-center gap-2">
+            <button type="button" onClick={prev} aria-label={g.prev} className={btn}>
+              <ChevronLeft className="w-5 h-5" />
             </button>
-          ))}
-        </div>
-        <div className="ml-auto flex items-center gap-2">
-          {!reducedMotion && (
-            <button
-              type="button"
-              onClick={() => setUserPaused((p) => !p)}
-              aria-label={userPaused ? g.play : g.pause}
-              className={btn}
-            >
-              {userPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+            <button type="button" onClick={next} aria-label={g.next} className={btn}>
+              <ChevronRight className="w-5 h-5" />
             </button>
-          )}
-          <button type="button" onClick={prev} aria-label={g.prev} className={btn}>
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button type="button" onClick={next} aria-label={g.next} className={btn}>
-            <ChevronRight className="w-5 h-5" />
-          </button>
+          </div>
         </div>
       </div>
-    </div>
+      {lightbox && index > 0 && (
+        <ProductLightbox
+          files={SCREENS}
+          items={g.slides}
+          index={index - 1}
+          onIndex={(k) => setIndex(k + 1)}
+          onClose={closeLightbox}
+          labels={{ dialog: g.dialog, close: g.close, prev: g.prev, next: g.next, note: g.note }}
+        />
+      )}
+    </>
   );
 };
 
